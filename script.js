@@ -63,6 +63,29 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content'); // tabs.forEach(t => t.addEventListener('click', () => console.log('Tab')));
+tabsContainer.addEventListener('click', function (el) {
+  // el.preventDefault();
+  const clicked = el.target.closest('.operations__tab');
+  console.log(clicked);
+  if (!clicked) return;
+  // Active tab
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  tabsContent.forEach(tab =>
+    tab.classList.remove('operations__content--active')
+  );
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
 //     e.preventDefault();
@@ -77,7 +100,7 @@ btnScrollTo.addEventListener('click', function (e) {
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
 
-  console.log(e.target);
+  // console.log(e.target);
   // Matching strategy
   if (e.target.classList.contains('nav__link')) {
     const id = e.target.getAttribute('href');
@@ -87,14 +110,14 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 //// EXERCISES
 //// Selecting elements
-console.log(document.documentElement);
-console.log(document.head);
-console.log(document.body);
+// console.log(document.documentElement);
+// console.log(document.head);
+// console.log(document.body);
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button');
-console.log(allButtons);
+// console.log(allButtons);
 document.getElementsByClassName('btn');
 
 //// Creating and insertin elements
@@ -136,11 +159,11 @@ document.documentElement.style.setProperty('--color-primary', 'orangered');
 
 // Atributes
 const logo = document.querySelector('.nav__logo');
-console.log(logo.alt);
-console.log(logo.src);
+// console.log(logo.alt);
+// console.log(logo.src);
 
 //Data attributes
-console.log(logo.dataset.versionNumber);
+// console.log(logo.dataset.versionNumber);
 
 // Classes
 logo.classList.add('c');
@@ -153,9 +176,6 @@ const alertH1 = function (e) {
   // remove event after listen
   h1.removeEventListener('mouseenter', alertH1);
 };
-
-const h1 = document.querySelector('h1');
-h1.addEventListener('mouseenter', alertH1);
 
 /// Old way using listener
 // h1.onmouseenter = function (e) {
@@ -180,3 +200,24 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 document.querySelector('.nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
 });
+
+const h1 = document.querySelector('h1');
+h1.addEventListener('mouseenter', alertH1);
+
+// Going downwards: child
+// console.log(h1.querySelectorAll('.highlight'));
+// console.log(h1.children);
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// Going upwards
+// console.log(h1.parentNode);
+// console.log(h1.parentElement);
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// Going sideways
+// console.log(h1.previousElementSibling);
+// console.log(h1.nextElementSibling);
+// console.log(h1.previousSibling);
+// console.log(h1.nextSibling);
+// console.log(h1.parentElement.children);
