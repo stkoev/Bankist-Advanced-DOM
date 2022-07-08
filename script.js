@@ -10,6 +10,11 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+const nav = document.querySelector('.nav');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content'); // tabs.forEach(t => t.addEventListener('click', () => console.log('Tab')));
+
 const openModal = function (e) {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -64,9 +69,7 @@ btnScrollTo.addEventListener('click', function (e) {
 });
 
 // Tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content'); // tabs.forEach(t => t.addEventListener('click', () => console.log('Tab')));
+
 tabsContainer.addEventListener('click', function (el) {
   // el.preventDefault();
   const clicked = el.target.closest('.operations__tab');
@@ -85,6 +88,25 @@ tabsContainer.addEventListener('click', function (el) {
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
 });
+
+// Menu fade animation
+const handleHover = function (e, opacity) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    console.log(siblings);
+
+    const logo = link.closest('.nav').querySelector('img');
+    siblings.forEach(el => {
+      // console.log(el);
+      if (el !== link) el.style.opacity = opacity;
+    });
+    logo.style.opacity = opacity;
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', e => handleHover(e, 1));
 
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
@@ -155,7 +177,7 @@ console.log(getComputedStyle(message).color);
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height, 10) + 40 + 'px';
 
-document.documentElement.style.setProperty('--color-primary', 'orangered');
+// document.documentElement.style.setProperty('--color-primary', 'orangered');
 
 // Atributes
 const logo = document.querySelector('.nav__logo');
@@ -202,7 +224,7 @@ document.querySelector('.nav').addEventListener('click', function (e) {
 });
 
 const h1 = document.querySelector('h1');
-h1.addEventListener('mouseenter', alertH1);
+// h1.addEventListener('mouseenter', alertH1);
 
 // Going downwards: child
 // console.log(h1.querySelectorAll('.highlight'));
@@ -213,7 +235,7 @@ h1.lastElementChild.style.color = 'orangered';
 // Going upwards
 // console.log(h1.parentNode);
 // console.log(h1.parentElement);
-h1.closest('.header').style.background = 'var(--gradient-secondary)';
+// h1.closest('.header').style.background = 'var(--gradient-secondary)';
 
 // Going sideways
 // console.log(h1.previousElementSibling);
