@@ -119,6 +119,30 @@ window.addEventListener('scroll', function () {
   }
 });
 
+// const obsCallback = function (entries, observer) {
+//   entries.forEach(entry => console.log(entry));
+// };
+// const obsOptions = {
+//   root: null,
+//   threshold: [0, 0.2],
+// };
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+const obsCallback = function (entries) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const navHeight = nav.getBoundingClientRect().height;
+const obsOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+};
+const header = document.querySelector('.header');
+const headerObserver = new IntersectionObserver(obsCallback, obsOptions);
+headerObserver.observe(header);
+
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
 //     e.preventDefault();
@@ -146,7 +170,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
-const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button');
