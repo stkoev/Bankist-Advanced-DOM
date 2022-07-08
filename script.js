@@ -90,7 +90,7 @@ tabsContainer.addEventListener('click', function (el) {
 });
 
 // Menu fade animation
-const handleHover = function (e, opacity) {
+const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
@@ -99,14 +99,25 @@ const handleHover = function (e, opacity) {
     const logo = link.closest('.nav').querySelector('img');
     siblings.forEach(el => {
       // console.log(el);
-      if (el !== link) el.style.opacity = opacity;
+      if (el !== link) el.style.opacity = this;
     });
-    logo.style.opacity = opacity;
+    logo.style.opacity = this;
   }
 };
 
 nav.addEventListener('mouseover', handleHover.bind(0.5));
-nav.addEventListener('mouseout', e => handleHover(e, 1));
+nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticki navigation
+const initialCoords = section1.getBoundingClientRect();
+window.addEventListener('scroll', function () {
+  console.log(window.scrollY);
+  if (window.scrollY > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
 
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
