@@ -109,15 +109,15 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 // Sticki navigation
-const initialCoords = section1.getBoundingClientRect();
-window.addEventListener('scroll', function () {
-  console.log(window.scrollY);
-  if (window.scrollY > initialCoords.top) {
-    nav.classList.add('sticky');
-  } else {
-    nav.classList.remove('sticky');
-  }
-});
+// const initialCoords = section1.getBoundingClientRect();
+// window.addEventListener('scroll', function () {
+//   console.log(window.scrollY);
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
 
 // const obsCallback = function (entries, observer) {
 //   entries.forEach(entry => console.log(entry));
@@ -142,6 +142,24 @@ const obsOptions = {
 const header = document.querySelector('.header');
 const headerObserver = new IntersectionObserver(obsCallback, obsOptions);
 headerObserver.observe(header);
+
+// Reveal sections
+const allSections = document.querySelectorAll('.section');
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+allSections.forEach(section => {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
 
 // document.querySelectorAll('.nav__link').forEach(function (el) {
 //   el.addEventListener('click', function (e) {
@@ -170,7 +188,7 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 // console.log(document.documentElement);
 // console.log(document.head);
 // console.log(document.body);
-const allSections = document.querySelectorAll('.section');
+
 document.getElementById('section--1');
 const allButtons = document.getElementsByTagName('button');
 // console.log(allButtons);
